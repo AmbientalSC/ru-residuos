@@ -270,6 +270,21 @@ const App: React.FC = () => {
         </div>
       </footer>
 
+      {/* ChatGPT Floating Button */}
+      <a
+        href="https://chatgpt.com/g/g-69384d79c3008191b36d884df71f8bad-residuos-r-u"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 shadow-lg transition-all duration-300 hover:scale-110 z-50 rounded-full"
+        title="Consultar no ChatGPT"
+      >
+        <img 
+          src="./ChatGPT.png" 
+          alt="ChatGPT" 
+          className="w-16 h-16 rounded-full"
+        />
+      </a>
+
       {/* Modals */}
       <LoginModal 
         isOpen={isLoginOpen} 
