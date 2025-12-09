@@ -27,9 +27,13 @@ export const ItemFormModal: React.FC<ItemFormModalProps> = ({
     encaminharPara: '',
     cidade: cities[0] || 'Joinville'
   });
+  
+  const [isCustomCity, setIsCustomCity] = useState(false);
+  const [customCityInput, setCustomCityInput] = useState('');
 
   useEffect(() => {
     if (initialData) {
+      const cityExists = cities.includes(initialData.cidade);
       setFormData({
         material: initialData.material,
         adicionadoEm: initialData.adicionadoEm,
@@ -38,6 +42,10 @@ export const ItemFormModal: React.FC<ItemFormModalProps> = ({
         encaminharPara: initialData.encaminharPara,
         cidade: initialData.cidade,
       });
+      if (!cityExists) {
+        setIsCustomCity(true);
+        setCustomCityInput(initialData.cidade);
+      }
     } else {
         setFormData({
             material: '',
@@ -47,6 +55,8 @@ export const ItemFormModal: React.FC<ItemFormModalProps> = ({
             encaminharPara: '',
             cidade: cities[0] || 'Joinville'
         });
+        setIsCustomCity(false);
+        setCustomCityInput('');
     }
   }, [initialData, isOpen, cities]);
 
@@ -54,7 +64,11 @@ export const ItemFormModal: React.FC<ItemFormModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    const submitData = {
+      ...formData,
+      cidade: isCustomCity ? customCityInput : formData.cidade
+    };
+    onSubmit(submitData);
     onClose();
   };
 
@@ -95,15 +109,50 @@ export const ItemFormModal: React.FC<ItemFormModalProps> = ({
             
             <div className="flex flex-col gap-1">
               <label className="text-sm font-medium text-gray-700">Cidade</label>
-              <select 
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-eco-500"
-                value={formData.cidade}
-                onChange={e => setFormData({...formData, cidade: e.target.value})}
-              >
-                {cities.map(city => (
-                  <option key={city} value={city}>{city}</option>
-                ))}
-              </select>
+              {!isCustomCity ? (
+                <div className="flex gap-1">
+                  <select 
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-eco-500 text-sm"
+                    value={formData.cidade}
+                    onChange={e => setFormData({...formData, cidade: e.target.value})}
+                  >
+                    {cities.map(city => (
+                      <option key={city} value={city}>{city}</option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    onClick={() => setIsCustomCity(true)}
+                    className="px-2 py-1 text-xs text-eco-600 hover:text-eco-700 border border-eco-300 rounded-lg hover:bg-eco-50 transition-colors whitespace-nowrap"
+                    title="Adicionar nova cidade"
+                  >
+                    + Nova
+                  </button>
+                </div>
+              ) : (
+                <div className="flex gap-1">
+                  <input
+                    type="text"
+                    value={customCityInput}
+                    onChange={e => setCustomCityInput(e.target.value)}
+                    placeholder="Digite a cidade"
+                    required
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-eco-500 text-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsCustomCity(false);
+                      setCustomCityInput('');
+                      setFormData({...formData, cidade: cities[0] || 'Joinville'});
+                    }}
+                    className="px-2 py-1 text-xs text-gray-600 hover:text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                    title="Voltar para seleção"
+                  >
+                    ←
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
