@@ -37,11 +37,12 @@ export const DataTable: React.FC<DataTableProps> = ({ items, userRole, onEdit, o
         <table className="w-full text-left text-sm table-fixed">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
-              <th className="px-6 py-4 font-semibold text-gray-700 w-[20%]">Material</th>
-              <th className="px-6 py-4 font-semibold text-gray-700 w-[18%] hidden md:table-cell">Encaminhamento</th>
-              <th className="px-6 py-4 font-semibold text-gray-700 w-[12%]">Móveis/Volumosos</th>
-              <th className="px-6 py-4 font-semibold text-gray-700 w-[12%] hidden lg:table-cell">Cidade</th>
-              <th className="px-6 py-4 font-semibold text-gray-700 w-[28%] hidden sm:table-cell">Observação</th>
+              <th className="px-6 py-4 font-semibold text-gray-700 w-[18%]">Material</th>
+              <th className="px-6 py-4 font-semibold text-gray-700 w-[16%] hidden md:table-cell">Encaminhamento</th>
+              <th className="px-6 py-4 font-semibold text-gray-700 w-[11%]">Móveis/Volumosos</th>
+              <th className="px-6 py-4 font-semibold text-gray-700 w-[11%] hidden lg:table-cell">Cidade</th>
+              <th className="px-6 py-4 font-semibold text-gray-700 w-[10%] hidden xl:table-cell">Adicionado em</th>
+              <th className="px-6 py-4 font-semibold text-gray-700 w-[24%] hidden sm:table-cell">Observação</th>
               {userRole === 'admin' && (
                 <th className="px-6 py-4 font-semibold text-gray-700 text-right w-[10%]">Ações</th>
               )}
@@ -71,6 +72,12 @@ export const DataTable: React.FC<DataTableProps> = ({ items, userRole, onEdit, o
                     <div className="flex items-start gap-2">
                         <MapPin size={14} className="flex-shrink-0 mt-0.5" />
                         <span className="break-words">{item.cidade}</span>
+                    </div>
+                </td>
+                <td className="px-6 py-4 hidden xl:table-cell text-gray-600">
+                    <div className="flex items-start gap-2">
+                        <Calendar size={14} className="flex-shrink-0 mt-0.5" />
+                        <span className="whitespace-nowrap">{item.adicionadoEm}</span>
                     </div>
                 </td>
                 <td className="px-6 py-4 text-gray-500 hidden sm:table-cell" title={item.obs}>
