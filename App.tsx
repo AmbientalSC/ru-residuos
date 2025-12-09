@@ -166,7 +166,7 @@ const App: React.FC = () => {
             <div className="bg-eco-100 p-2 rounded-lg">
                 <Recycle className="text-eco-600" size={24} />
             </div>
-            <h1 className="text-xl font-bold text-gray-900 tracking-tight">Amb.<span className="text-eco-600">Coletáveis</span></h1>
+            <h1 className="text-xl font-bold text-gray-900 tracking-tight">Amb.<span className="text-eco-600">Resíduos</span></h1>
           </div>
           
           <div>
@@ -266,7 +266,7 @@ const App: React.FC = () => {
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200 py-6 mt-8">
         <div className="w-full px-4 text-center text-gray-500 text-sm">
-          &copy; {new Date().getFullYear()} Amb.Coletáveis. Todos os direitos reservados.
+          &copy; {new Date().getFullYear()} Amb.Resíduos. Todos os direitos reservados.
         </div>
       </footer>
 
