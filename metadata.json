@@ -1,0 +1,5 @@
+{
+  "name": "EcoColeta Manager",
+  "description": "A comprehensive waste collection management system allowing users to search disposal guidelines and administrators to manage collection rules.",
+  "requestFramePermissions": []
+}
