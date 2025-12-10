@@ -22,15 +22,29 @@ const normalizeString = (str: string): string => {
   return removeAccents(str).toLowerCase();
 };
 
+// Capitaliza primeira letra (para exibição)
+const capitalizeFirst = (str: string): string => {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+// Capitaliza primeira letra de cada palavra (para cidades)
+const capitalizeWords = (str: string): string => {
+  if (!str) return str;
+  return str.split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
 // Mapeia os dados do banco para o formato da aplicação
 const mapFromDB = (dbItem: any): CollectionItem => ({
   id: dbItem.id,
-  material: dbItem.material || '',
+  material: capitalizeFirst(dbItem.material || ''),
   adicionadoEm: dbItem['adicionado em'] || '',
   moveisVolumosos: dbItem.moveis_volumosos || '',
-  obs: dbItem.obs || '',
+  obs: capitalizeFirst(dbItem.obs || ''),
   encaminharPara: dbItem.encaminhar_para || '',
-  cidade: dbItem.cidade || ''
+  cidade: capitalizeWords(dbItem.cidade || '')
 });
 
 // Mapeia os dados da aplicação para o formato do banco
