@@ -157,6 +157,18 @@ const App: React.FC = () => {
     }
   };
 
+  const handleFormSubmitMultiple = async (itemsData: Omit<CollectionItem, 'id'>[]) => {
+    try {
+      const createdItems = await Promise.all(
+        itemsData.map(itemData => supabaseService.createItem(itemData))
+      );
+      setItems(prev => [...createdItems, ...prev]);
+    } catch (err) {
+      console.error('Error saving items:', err);
+      alert('Erro ao salvar itens. Verifique as permissões ou tente novamente.');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900">
       {/* Header */}
@@ -296,6 +308,7 @@ const App: React.FC = () => {
         isOpen={isFormOpen}
         onClose={() => setIsFormOpen(false)}
         onSubmit={handleFormSubmit}
+        onSubmitMultiple={handleFormSubmitMultiple}
         initialData={editingItem}
         cities={cities}
       />
