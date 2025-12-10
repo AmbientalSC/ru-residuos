@@ -12,6 +12,16 @@ export const supabase = supabaseUrl && supabaseAnonKey
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
 
+// Remove acentos de uma string
+const removeAccents = (str: string): string => {
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+};
+
+// Normaliza string: minúsculas e sem acentos
+const normalizeString = (str: string): string => {
+  return removeAccents(str).toLowerCase();
+};
+
 // Mapeia os dados do banco para o formato da aplicação
 const mapFromDB = (dbItem: any): CollectionItem => ({
   id: dbItem.id,
@@ -25,12 +35,12 @@ const mapFromDB = (dbItem: any): CollectionItem => ({
 
 // Mapeia os dados da aplicação para o formato do banco
 const mapToDB = (item: Omit<CollectionItem, 'id'>) => ({
-  material: item.material,
+  material: normalizeString(item.material),
   'adicionado em': item.adicionadoEm,
-  moveis_volumosos: item.moveisVolumosos,
-  obs: item.obs,
-  encaminhar_para: item.encaminharPara,
-  cidade: item.cidade
+  moveis_volumosos: normalizeString(item.moveisVolumosos),
+  obs: normalizeString(item.obs),
+  encaminhar_para: normalizeString(item.encaminharPara),
+  cidade: normalizeString(item.cidade)
 });
 
 // Database operations
